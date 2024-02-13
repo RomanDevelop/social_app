@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "974302830503",
+    "project_id": "sailordou",
+    "storage_bucket": "sailordou.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974302830503:android:49785798bc0608dfda6082",
+        "android_client_info": {
+          "package_name": "com.example.sailordou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974302830503-j214runkh0rgc3aghtm2a7s70kab10n7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sailordou",
+            "certificate_hash": "3890d23792a159ce073643c159b98a17319b2a36"
+          }
+        },
+        {
+          "client_id": "974302830503-m840c2e9jp48nn08abnscn14hbvgo9jj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIiXzg12VuRpcSvjgd0px-2Uu47TOMOGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974302830503-m840c2e9jp48nn08abnscn14hbvgo9jj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "974302830503-a3kbph73shch4t29khm2k3pk3oer6is0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sailordou"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
