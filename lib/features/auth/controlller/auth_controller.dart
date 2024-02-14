@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sailordou/core/utils.dart';
@@ -13,51 +14,53 @@ final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   ),
 );
 
+final authStateChangeProvider = StreamProvider((ref) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.authStateChange;
+});
+
+final getUserDataProvider = StreamProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
 class AuthController extends StateNotifier<bool> {
   final AuthRepository _authRepository;
   final Ref _ref;
   AuthController({required AuthRepository authRepository, required Ref ref})
       : _authRepository = authRepository,
         _ref = ref,
-        super(false);
+        super(false); // loading
 
-  void signInWithGoogle(BuildContext context) async {
+  Stream<User?> get authStateChange => _authRepository.authStateChange;
+
+  void signInWithGoogle(BuildContext context, bool isFromLogin) async {
     state = true;
-    final user = await _authRepository.signInWithGoogle();
+    final user = await _authRepository.signInWithGoogle(isFromLogin);
     state = false;
     user.fold(
-        (l) => showSnackBar(context, l.message),
-        (userModel) =>
-            _ref.read(userProvider.notifier).update((state) => userModel));
+      (l) => showSnackBar(context, l.message),
+      (userModel) =>
+          _ref.read(userProvider.notifier).update((state) => userModel),
+    );
+  }
+
+  void signInAsGuest(BuildContext context) async {
+    state = true;
+    final user = await _authRepository.signInAsGuest();
+    state = false;
+    user.fold(
+      (l) => showSnackBar(context, l.message),
+      (userModel) =>
+          _ref.read(userProvider.notifier).update((state) => userModel),
+    );
+  }
+
+  Stream<UserModel> getUserData(String uid) {
+    return _authRepository.getUserData(uid);
+  }
+
+  void logout() async {
+    _authRepository.logOut();
   }
 }
-//   Stream<User?> get authStateChange => _authRepository.authStateChange;
-
-//   void signInWithGoogle(BuildContext context, bool isFromLogin) async {
-//     state = true;
-//     final user = await _authRepository.signInWithGoogle(isFromLogin);
-//     state = false;
-//     user.fold(
-//       (l) => showSnackBar(context, l.message),
-//       (userModel) => _ref.read(userProvider.notifier).update((state) => userModel),
-//     );
-//   }
-
-//   void signInAsGuest(BuildContext context) async {
-//     state = true;
-//     final user = await _authRepository.signInAsGuest();
-//     state = false;
-//     user.fold(
-//       (l) => showSnackBar(context, l.message),
-//       (userModel) => _ref.read(userProvider.notifier).update((state) => userModel),
-//     );
-//   }
-
-//   Stream<UserModel> getUserData(String uid) {
-//     return _authRepository.getUserData(uid);
-//   }
-
-//   void logout() async {
-//     _authRepository.logOut();
-//   }
-// }
