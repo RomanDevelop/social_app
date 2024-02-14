@@ -1,19 +1,3 @@
-// import 'dart:io';
-
-// import 'package:flutter/foundation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:fpdart/fpdart.dart';
-// import 'package:reddit_tutorial/core/constants/constants.dart';
-// import 'package:reddit_tutorial/core/failure.dart';
-// import 'package:reddit_tutorial/core/providers/storage_repository_provider.dart';
-// import 'package:reddit_tutorial/core/utils.dart';
-// import 'package:reddit_tutorial/features/auth/controlller/auth_controller.dart';
-// import 'package:reddit_tutorial/features/community/repository/communitory_repository.dart';
-// import 'package:reddit_tutorial/models/community_model.dart';
-// import 'package:reddit_tutorial/models/post_model.dart';
-// import 'package:routemaster/routemaster.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
@@ -22,6 +6,11 @@ import 'package:sailordou/core/utils.dart';
 import 'package:sailordou/features/auth/controlller/auth_controller.dart';
 import 'package:sailordou/features/community/repository/communitory_repository.dart';
 import 'package:sailordou/models/community_model.dart';
+
+final userCommunitiesProvider = StreamProvider((ref) {
+  final communityController = ref.watch(communityControllerProvider.notifier);
+  return communityController.getUserCommunities();
+});
 
 final communityControllerProvider =
     StateNotifierProvider<CommunityController, bool>((ref) {
@@ -34,9 +23,11 @@ final communityControllerProvider =
   );
 });
 
-// final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
-//   return ref.watch(communityControllerProvider.notifier).getCommunityByName(name);
-// });
+final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
+  return ref
+      .watch(communityControllerProvider.notifier)
+      .getCommunityByName(name);
+});
 
 // final searchCommunityProvider = StreamProvider.family((ref, String query) {
 //   return ref.watch(communityControllerProvider.notifier).searchCommunity(query);
@@ -98,14 +89,14 @@ class CommunityController extends StateNotifier<bool> {
 //     });
 //   }
 
-//   Stream<List<Community>> getUserCommunities() {
-//     final uid = _ref.read(userProvider)!.uid;
-//     return _communityRepository.getUserCommunities(uid);
-//   }
+  Stream<List<Community>> getUserCommunities() {
+    final uid = _ref.read(userProvider)!.uid;
+    return _communityRepository.getUserCommunities(uid);
+  }
 
-//   Stream<Community> getCommunityByName(String name) {
-//     return _communityRepository.getCommunityByName(name);
-//   }
+  Stream<Community> getCommunityByName(String name) {
+    return _communityRepository.getCommunityByName(name);
+  }
 
 //   void editCommunity({
 //     required File? profileFile,
