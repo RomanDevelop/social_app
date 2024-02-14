@@ -1,35 +1,35 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:fpdart/fpdart.dart';
-// import 'package:reddit_tutorial/core/constants/firebase_constants.dart';
-// import 'package:reddit_tutorial/core/failure.dart';
-// import 'package:reddit_tutorial/core/providers/firebase_providers.dart';
-// import 'package:reddit_tutorial/core/type_defs.dart';
-// import 'package:reddit_tutorial/models/community_model.dart';
-// import 'package:reddit_tutorial/models/post_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:sailordou/core/constants/firebase_constants.dart';
+import 'package:sailordou/core/failure.dart';
+import 'package:sailordou/core/providers/firebase_providers.dart';
+import 'package:sailordou/core/type_defs.dart';
+import 'package:sailordou/models/community_model.dart';
 
-// final communityRepositoryProvider = Provider((ref) {
-//   return CommunityRepository(firestore: ref.watch(firestoreProvider));
-// });
+final communityRepositoryProvider = Provider((ref) {
+  return CommunityRepository(firestore: ref.watch(firestoreProvider));
+});
 
-// class CommunityRepository {
-//   final FirebaseFirestore _firestore;
-//   CommunityRepository({required FirebaseFirestore firestore}) : _firestore = firestore;
+class CommunityRepository {
+  final FirebaseFirestore _firestore;
+  CommunityRepository({required FirebaseFirestore firestore})
+      : _firestore = firestore;
 
-//   FutureVoid createCommunity(Community community) async {
-//     try {
-//       var communityDoc = await _communities.doc(community.name).get();
-//       if (communityDoc.exists) {
-//         throw 'Community with the same name already exists!';
-//       }
+  FutureVoid createCommunity(Community community) async {
+    try {
+      var communityDoc = await _communities.doc(community.name).get();
+      if (communityDoc.exists) {
+        throw 'Community with the same name already exists!';
+      }
 
-//       return right(_communities.doc(community.name).set(community.toMap()));
-//     } on FirebaseException catch (e) {
-//       throw e.message!;
-//     } catch (e) {
-//       return left(Failure(e.toString()));
-//     }
-//   }
+      return right(_communities.doc(community.name).set(community.toMap()));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
+  }
 
 //   FutureVoid joinCommunity(String communityName, String userId) async {
 //     try {
@@ -126,5 +126,6 @@
 //   }
 
 //   CollectionReference get _posts => _firestore.collection(FirebaseConstants.postsCollection);
-//   CollectionReference get _communities => _firestore.collection(FirebaseConstants.communitiesCollection);
-// }
+  CollectionReference get _communities =>
+      _firestore.collection(FirebaseConstants.communitiesCollection);
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sailordou/features/community/controller/community_controller.dart';
 
 class CreateCommunityScreen extends ConsumerStatefulWidget {
   const CreateCommunityScreen({super.key});
@@ -18,12 +19,12 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
     communityNameController.dispose();
   }
 
-  // void createCommunity() {
-  //   ref.read(communityControllerProvider.notifier).createCommunity(
-  //         communityNameController.text.trim(),
-  //         context,
-  //       );
-  // }
+  void createCommunity() {
+    ref.read(communityControllerProvider.notifier).createCommunity(
+          communityNameController.text.trim(),
+          context,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,7 @@ class _CreateCommunityScreenState extends ConsumerState<CreateCommunityScreen> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () {},
-              //   onPressed: createCommunity,
+              onPressed: createCommunity,
               style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(

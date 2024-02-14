@@ -14,20 +14,25 @@
 // import 'package:reddit_tutorial/models/post_model.dart';
 // import 'package:routemaster/routemaster.dart';
 
-// final userCommunitiesProvider = StreamProvider((ref) {
-//   final communityController = ref.watch(communityControllerProvider.notifier);
-//   return communityController.getUserCommunities();
-// });
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:sailordou/core/constants/constants.dart';
+import 'package:sailordou/core/utils.dart';
+import 'package:sailordou/features/auth/controlller/auth_controller.dart';
+import 'package:sailordou/features/community/repository/communitory_repository.dart';
+import 'package:sailordou/models/community_model.dart';
 
-// final communityControllerProvider = StateNotifierProvider<CommunityController, bool>((ref) {
-//   final communityRepository = ref.watch(communityRepositoryProvider);
-//   final storageRepository = ref.watch(storageRepositoryProvider);
-//   return CommunityController(
-//     communityRepository: communityRepository,
-//     storageRepository: storageRepository,
-//     ref: ref,
-//   );
-// });
+final communityControllerProvider =
+    StateNotifierProvider<CommunityController, bool>((ref) {
+  final communityRepository = ref.watch(communityRepositoryProvider);
+  // final storageRepository = ref.watch(storageRepositoryProvider);
+  return CommunityController(
+    communityRepository: communityRepository,
+    // storageRepository: storageRepository,
+    ref: ref,
+  );
+});
 
 // final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
 //   return ref.watch(communityControllerProvider.notifier).getCommunityByName(name);
@@ -41,38 +46,38 @@
 //   return ref.read(communityControllerProvider.notifier).getCommunityPosts(name);
 // });
 
-// class CommunityController extends StateNotifier<bool> {
-//   final CommunityRepository _communityRepository;
-//   final Ref _ref;
-//   final StorageRepository _storageRepository;
-//   CommunityController({
-//     required CommunityRepository communityRepository,
-//     required Ref ref,
-//     required StorageRepository storageRepository,
-//   })  : _communityRepository = communityRepository,
-//         _ref = ref,
-//         _storageRepository = storageRepository,
-//         super(false);
+class CommunityController extends StateNotifier<bool> {
+  final CommunityRepository _communityRepository;
+  final Ref _ref;
+  // final StorageRepository _storageRepository;
+  CommunityController({
+    required CommunityRepository communityRepository,
+    required Ref ref,
+    // required StorageRepository storageRepository,
+  })  : _communityRepository = communityRepository,
+        _ref = ref,
+        //   _storageRepository = storageRepository,
+        super(false);
 
-//   void createCommunity(String name, BuildContext context) async {
-//     state = true;
-//     final uid = _ref.read(userProvider)?.uid ?? '';
-//     Community community = Community(
-//       id: name,
-//       name: name,
-//       banner: Constants.bannerDefault,
-//       avatar: Constants.avatarDefault,
-//       members: [uid],
-//       mods: [uid],
-//     );
+  void createCommunity(String name, BuildContext context) async {
+    state = true;
+    final uid = _ref.read(userProvider)?.uid ?? '';
+    Community community = Community(
+      id: name,
+      name: name,
+      banner: Constants.bannerDefault,
+      avatar: Constants.avatarDefault,
+      members: [uid],
+      mods: [uid],
+    );
 
-//     final res = await _communityRepository.createCommunity(community);
-//     state = false;
-//     res.fold((l) => showSnackBar(context, l.message), (r) {
-//       showSnackBar(context, 'Community created successfully!');
-//       Routemaster.of(context).pop();
-//     });
-//   }
+    final res = await _communityRepository.createCommunity(community);
+    state = false;
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      showSnackBar(context, 'Community created successfully!');
+      Routemaster.of(context).pop();
+    });
+  }
 
 //   void joinCommunity(Community community, BuildContext context) async {
 //     final user = _ref.read(userProvider)!;
@@ -162,4 +167,4 @@
 //   Stream<List<Post>> getCommunityPosts(String name) {
 //     return _communityRepository.getCommunityPosts(name);
 //   }
-// }
+}
