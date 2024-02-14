@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sailordou/core/common/sign_in_button.dart';
 import 'package:sailordou/features/auth/controlller/auth_controller.dart';
+import 'package:sailordou/models/community_model.dart';
 
 class CommunityListDrawer extends ConsumerWidget {
   const CommunityListDrawer({super.key});
@@ -11,9 +12,9 @@ class CommunityListDrawer extends ConsumerWidget {
     Routemaster.of(context).push('/create-community');
   }
 
-  // void navigateToCommunity(BuildContext context, Community community) {
-  //   Routemaster.of(context).push('/r/${community.name}');
-  // }
+  void navigateToCommunity(BuildContext context, Community community) {
+    Routemaster.of(context).push('/r/${community.name}');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
