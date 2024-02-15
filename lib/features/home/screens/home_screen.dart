@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sailordou/features/auth/controlller/auth_controller.dart';
+import 'package:sailordou/features/home/delegates/search_community_delegate.dart';
 import 'package:sailordou/features/home/drawers/community_list_drawer.dart';
 import 'package:sailordou/features/home/drawers/profile_drawer.dart';
 
@@ -50,7 +51,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              //    showSearch(context: context, delegate: SearchCommunityDelegate(ref));
+              showSearch(
+                  context: context, delegate: SearchCommunityDelegate(ref));
             },
             icon: const Icon(Icons.search),
           ),

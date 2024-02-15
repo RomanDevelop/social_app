@@ -33,9 +33,9 @@ final getCommunityByNameProvider = StreamProvider.family((ref, String name) {
       .getCommunityByName(name);
 });
 
-// final searchCommunityProvider = StreamProvider.family((ref, String query) {
-//   return ref.watch(communityControllerProvider.notifier).searchCommunity(query);
-// });
+final searchCommunityProvider = StreamProvider.family((ref, String query) {
+  return ref.watch(communityControllerProvider.notifier).searchCommunity(query);
+});
 
 // final getCommunityPostsProvider = StreamProvider.family((ref, String name) {
 //   return ref.read(communityControllerProvider.notifier).getCommunityPosts(name);
@@ -147,9 +147,9 @@ class CommunityController extends StateNotifier<bool> {
     );
   }
 
-//   Stream<List<Community>> searchCommunity(String query) {
-//     return _communityRepository.searchCommunity(query);
-//   }
+  Stream<List<Community>> searchCommunity(String query) {
+    return _communityRepository.searchCommunity(query);
+  }
 
 //   void addMods(String communityName, List<String> uids, BuildContext context) async {
 //     final res = await _communityRepository.addMods(communityName, uids);
