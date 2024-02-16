@@ -17,7 +17,7 @@ void main() async {
     name: 'sailordou',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp())); // 5.53
 }
 
 class MyApp extends ConsumerStatefulWidget {
