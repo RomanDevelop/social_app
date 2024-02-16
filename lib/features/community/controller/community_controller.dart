@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:sailordou/core/constants/constants.dart';
+import 'package:sailordou/core/failure.dart';
 import 'package:sailordou/core/providers/storage_repository_provider.dart';
 import 'package:sailordou/core/utils.dart';
 import 'package:sailordou/features/auth/controlller/auth_controller.dart';
@@ -74,24 +76,24 @@ class CommunityController extends StateNotifier<bool> {
     });
   }
 
-//   void joinCommunity(Community community, BuildContext context) async {
-//     final user = _ref.read(userProvider)!;
+  void joinCommunity(Community community, BuildContext context) async {
+    final user = _ref.read(userProvider)!;
 
-//     Either<Failure, void> res;
-//     if (community.members.contains(user.uid)) {
-//       res = await _communityRepository.leaveCommunity(community.name, user.uid);
-//     } else {
-//       res = await _communityRepository.joinCommunity(community.name, user.uid);
-//     }
+    Either<Failure, void> res;
+    if (community.members.contains(user.uid)) {
+      res = await _communityRepository.leaveCommunity(community.name, user.uid);
+    } else {
+      res = await _communityRepository.joinCommunity(community.name, user.uid);
+    }
 
-//     res.fold((l) => showSnackBar(context, l.message), (r) {
-//       if (community.members.contains(user.uid)) {
-//         showSnackBar(context, 'Community left successfully!');
-//       } else {
-//         showSnackBar(context, 'Community joined successfully!');
-//       }
-//     });
-//   }
+    res.fold((l) => showSnackBar(context, l.message), (r) {
+      if (community.members.contains(user.uid)) {
+        showSnackBar(context, 'Community left successfully!');
+      } else {
+        showSnackBar(context, 'Community joined successfully!');
+      }
+    });
+  }
 
   Stream<List<Community>> getUserCommunities() {
     final uid = _ref.read(userProvider)!.uid;
